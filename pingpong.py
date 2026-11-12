@@ -9,6 +9,8 @@ dy = 3
 platform_x = 50
 platform_x2 = 850
 platform_y = 330
+move_up= False
+move_down= False 
 move_right = False
 move_left = False
 game_over = False
@@ -60,19 +62,42 @@ while not game_over:
         if event.type == pygame.QUIT:
             game_over = True
         if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_DOWN:
                 move_right = True 
-            if event.key == pygame.K_LEFT:
+            if event.key == pygame.K_UP:
                 move_left = True 
         if event.type == pygame.KEYUP:
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_DOWN:
                 move_right = False
-            if event.key == pygame.K_LEFT:
-                move_left = False      
+            if event.key == pygame.K_UP:
+                move_left = False  
+        if event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_s:
+                move_up = True 
+            if event.key == pygame.K_w:
+                move_down = True 
+        if event.type == pygame.KEYUP:
+            if event.key == pygame.K_s:
+                move_up = False
+            if event.key == pygame.K_w:
+                move_down = False  
+    if platform.rect.y < 400:
+        platform.rect.y += 3   
+    if platform.rect.y > 0:
+        platform.rect.y -= 3
     if move_right:
-        platform.rect.x += 3
+        platform.rect.y += 3
     if move_left:
-        platform.rect.x -= 3
+        platform.rect.y -= 3
+    
+    if platform2.rect.y < 400:
+        platform2.rect.y += 3   
+    if platform2.rect.y > 0:
+        platform2.rect.y -= 3
+    if move_up:
+        platform2.rect.y += 3
+    if move_down:
+        platform2.rect.y -= 3
     ball.rect.x += dx
     ball.rect.y += dy
     if ball.rect.y < 0:
@@ -83,6 +108,8 @@ while not game_over:
         dy *= -1
     if ball.rect.colliderect(platform.rect):
         dx *= -1 
+    if ball.rect.colliderect(platform2.rect):
+        dx *= -1
     platform.draw()
     platform2.draw()
     ball.draw()
